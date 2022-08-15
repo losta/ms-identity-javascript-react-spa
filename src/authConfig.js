@@ -10,24 +10,24 @@ import { LogLevel } from "@azure/msal-browser";
  * To learn more about user flows, visit: https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview
  * To learn more about custom policies, visit: https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview
  */
-export const b2cPolicies = {
+ export const b2cPolicies = {
     names: {
-        signUpSignIn: "b2c_1_susi",
-        forgotPassword: "b2c_1_reset",
-        editProfile: "b2c_1_edit_profile"
+        signUpSignIn: "B2C_1_dvt_signupsignin",
+        forgotPassword: "B2C_1_dvt_reset",
+        editProfile: "B2C_1_dvt_edit_profile"
     },
     authorities: {
         signUpSignIn: {
-            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
+            authority: "https://DVTJHBB2C.b2clogin.com/DVTJHBB2C.onmicrosoft.com/B2C_1_dvt_signupsignin",
         },
         forgotPassword: {
-            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_reset",
+            authority: "https://DVTJHBB2C.b2clogin.com/DVTJHBB2C.onmicrosoft.com/B2C_1_dvt_reset",
         },
         editProfile: {
-            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_edit_profile"
+            authority: "https://DVTJHBB2C.b2clogin.com/DVTJHBB2C.onmicrosoft.com/B2C_1_dvt_edit_profile"
         }
     },
-    authorityDomain: "fabrikamb2c.b2clogin.com"
+    authorityDomain: "DVTJHBB2C.b2clogin.com"
 }
 
 /**
@@ -36,16 +36,16 @@ export const b2cPolicies = {
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
 export const msalConfig = {
-   auth: {
-        clientId: "2fdd06f3-7b34-49a3-a78b-0cf1dd87878e", // This is the ONLY mandatory field that you need to supply.
+    auth: {
+        clientId: "e81854cb-60f8-448e-9919-b174334b5f56", // This is the ONLY mandatory field that you need to supply.
         authority: b2cPolicies.authorities.signUpSignIn.authority, // Use a sign-up/sign-in user-flow as a default authority
         knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
-        redirectUri: "/", // Points to window.location.origin. You must register this URI on Azure Portal/App Registration.
+        redirectUri: "http://localhost:3000/", // Points to window.location.origin. You must register this URI on Azure Portal/App Registration.
         postLogoutRedirectUri: "/", // Indicates the page to navigate after logout.
         navigateToLoginRequestUrl: false, // If "true", will navigate back to the original request location before processing the auth code response.
     },
     cache: {
-        cacheLocation: "sessionStorage", // This configures where your cache will be stored
+        cacheLocation: "sessionStorage", // Configures cache location. "sessionStorage" is more secure, but "localStorage" gives you SSO between tabs.
         storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
     },
     system: {	
@@ -80,13 +80,14 @@ export const msalConfig = {
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest = {
-    scopes: ["User.Read"]
+    scopes: []
 };
 
 /**
- * Add here the scopes to request when obtaining an access token for MS Graph API. For more information, see:
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/resources-and-scopes.md
+ * An optional silentRequest object can be used to achieve silent SSO
+ * between applications by providing a "login_hint" property.
  */
-export const graphConfig = {
-    graphMeEndpoint: "Enter_the_Graph_Endpoint_Herev1.0/me"
+export const silentRequest = {
+  scopes: ["openid", "profile"],
+  loginHint: "example@domain.net"
 };
