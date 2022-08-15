@@ -50,5 +50,5 @@ jobs:
         with:
           app-name: 'b2cReactWeb'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_XXX }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F3ABF3AE5A94ACE920A84DC32097A0F }}
           package: release.zip
